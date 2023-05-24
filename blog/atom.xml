@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://lakesoul-io.github.io/blog</id>
-    <title>LakeSoul - A Cloud Native Realtime Lakehouse Framework Blog</title>
+    <title>LakeSoul - An Opensource Cloud Native Realtime Lakehouse Framework Blog</title>
     <updated>2023-04-21T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://lakesoul-io.github.io/blog"/>
-    <subtitle>LakeSoul - A Cloud Native Realtime Lakehouse Framework Blog</subtitle>
+    <subtitle>LakeSoul - An Opensource Cloud Native Realtime Lakehouse Framework Blog</subtitle>
     <icon>https://lakesoul-io.github.io/img/favicon.ico</icon>
     <entry>
         <title type="html"><![CDATA[What's new in version 2.2.0]]></title>
