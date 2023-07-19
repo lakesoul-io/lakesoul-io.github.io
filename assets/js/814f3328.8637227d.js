@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[535],{5641:e=>{e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"What\'s new in version 2.2.0","permalink":"/blog/2023/04/21/lakesoul-2.2.0-release"}]}')}}]);
