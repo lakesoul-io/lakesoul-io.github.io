@@ -94,11 +94,11 @@
 <li>
 <p>LakeSoul IO 性能评测</p>
 <p>LakeSoul 的 Native IO 层对 Parquet 文件格式实现了向量化的读写，并对对象存储做了异步并发、预取等性能优化。对 Parquet 文件的直接读写，相比 Spark、Flink 中原生的 parquet-mr 和 Hadoop S3A 的实现，有着显著的性能提升：</p>
-<p><img loading="lazy" alt="nativeio-vs-parquet-mr" src="https://lakesoul-io.github.io/zh-Hans/assets/images/nativeio-vs-parquet-mr-3b41190f2d2c1dc51291e1d1af4cd929.png" width="1042" height="782" class="img_ev3q"></p>
+<p><img decoding="async" loading="lazy" alt="nativeio-vs-parquet-mr" src="https://lakesoul-io.github.io/zh-Hans/assets/images/nativeio-vs-parquet-mr-3b41190f2d2c1dc51291e1d1af4cd929.png" width="1042" height="782" class="img_ev3q"></p>
 <p>我们也做了 LakeSoul 与 Hudi、Iceberg 在 COW、MOR 场景下的读写性能对比评测。评测场景是首先写入 1000 万条数据，然后 Upsert 10 次，每次 200 万行。该性能评测的数据和代码均已公开，见<a href="https://github.com/meta-soul/ccf-bdci2022-datalake-contest-examples/tree/mor" target="_blank" rel="noopener noreferrer">性能评测代码库</a>。性能对比如下：</p>
-<p><img loading="lazy" alt="write-perf" src="https://lakesoul-io.github.io/zh-Hans/assets/images/writer-perf-a56ed140af5beb2401506de10c079215.png" width="883" height="774" class="img_ev3q"></p>
+<p><img decoding="async" loading="lazy" alt="write-perf" src="https://lakesoul-io.github.io/zh-Hans/assets/images/writer-perf-a56ed140af5beb2401506de10c079215.png" width="883" height="774" class="img_ev3q"></p>
 <p>写性能方面，对于 COW 模式，三个框架都需要全量重写数据，计算开销基本一致，LakeSoul 借助 Native IO 的优化，性能是最好的。对于 MOR 模式，LakeSoul 采用的主键分桶排序模式，不需要维护索引更新，因此取得了很高的写吞吐，显著优于其他两个框架。</p>
-<p><img loading="lazy" alt="read-perf" src="https://lakesoul-io.github.io/zh-Hans/assets/images/read-perf-10e6a3361ed4f6d7ca1d6ab38571472b.png" width="883" height="774" class="img_ev3q"></p>
+<p><img decoding="async" loading="lazy" alt="read-perf" src="https://lakesoul-io.github.io/zh-Hans/assets/images/read-perf-10e6a3361ed4f6d7ca1d6ab38571472b.png" width="883" height="774" class="img_ev3q"></p>
 <p>读性能方面，对于 COW 模式，都是读取合并后的文件，没有 merge 开销，LakeSoul 同样得益于 IO 层优化取得领先。而对于 MOR 模式，虽然 LakeSoul 的有序合并相比 Hudi 的 bloom filter 过滤和 Iceberg 的 pos-delete 过滤在理论性能上有劣势，但是 LakeSoul 凭借 IO 层的多项优化，读性能仍然领先 Iceberg 1倍。</p>
 <p>值得一提的是，LakeSoul 在读写过程中，CPU、内存占用也都是三个框架之中最小的。另外，LakeSoul 的 MOR 读，将增量数据拆分为 100 次 Upsert 写入后，读性能仅有约 15% 的下降，也意味着 LakeSoul 可以在高频写入更新，并且没有 compaction 的情况下，仍然保证较好的读性能。</p>
 </li>
